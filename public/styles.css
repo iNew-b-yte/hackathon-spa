@@ -1,0 +1,40 @@
+/* section 'achievements' */
+.achievements {
+  background-color: #003145 ;
+}
+
+
+/* custom font-size */
+.custom-fontSize{
+  font-size: 0.8rem;
+}
+
+/* section challenges-List */
+#challenges-List{
+  background-color: #002A3B;
+}
+
+/* custom-input class*/
+.custom-input{
+  background-image: url("./assests2/searchIcon.png");
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+/* card-container */
+.card-container{
+  background-color: #003145;
+}
+
+/* card-button */
+.card-button{
+  background-color: #44924C;
+}
+
+.card-button:hover{
+  background-color: #1bae2a;
+}

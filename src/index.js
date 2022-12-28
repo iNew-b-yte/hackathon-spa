@@ -1,13 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import React, { lazy, Suspense } from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Components import starts here
+const HomeOrChallenges = lazy(() => import("./Routes/HomeOrChallenges"));
+const CreateChallengeForm = lazy(() => import("./Routes/CreateChallengeForm"));
+const ChallengeDetail = lazy(() => import("./Routes/ChallengeDetail"));
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Suspense fallback={
+      <div className="spinner-border 
+      text-success
+      text-center" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>}>
+        <Routes>
+          <Route path="/" element={<HomeOrChallenges />} />
+          <Route path="/createChallenge" element={<CreateChallengeForm />} />
+          <Route path='/challengeDetail' element={<ChallengeDetail />} />
+        </Routes>
+      </Suspense>
+    </Router>
   </React.StrictMode>
 );
 
