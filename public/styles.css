@@ -1,40 +1,53 @@
 /* section 'achievements' */
 .achievements {
-  background-color: #003145 ;
+  background-color: #003145;
 }
 
-
 /* custom font-size */
-.custom-fontSize{
+.custom-fontSize {
   font-size: 0.8rem;
 }
 
 /* section challenges-List */
-#challenges-List{
-  background-color: #002A3B;
+#challenges-List {
+  background-color: #002a3b;
 }
 
 /* custom-input class*/
-.custom-input{
+.custom-input {
   background-image: url("./assests2/searchIcon.png");
   background-position: 14px 12px;
   background-repeat: no-repeat;
   font-size: 16px;
-  
+
   border: none;
   border-bottom: 1px solid #ddd;
 }
 
 /* card-container */
-.card-container{
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
   background-color: #003145;
+  
 }
+
+/* card */
+.custom-card {
+  max-width: 100%;
+  border-radius: 7px;
+  flex-grow: 1;
+}
+
+/* .custom-card:last-child {  
+  flex-grow: 0;
+} */
 
 /* card-button */
-.card-button{
-  background-color: #44924C;
+.card-button {
+  background-color: #44924c;
 }
 
-.card-button:hover{
+.card-button:hover {
   background-color: #1bae2a;
 }

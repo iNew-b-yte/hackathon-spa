@@ -142,6 +142,15 @@ function HomeOrChallenges() {
                 </div>
                 <div className="p-5 card-container">
                 <ChallengeCard />
+                <ChallengeCard />
+                <ChallengeCard />
+                <ChallengeCard />
+                <ChallengeCard />
+                <ChallengeCard />
+                <ChallengeCard />
+                <ChallengeCard />
+                <ChallengeCard />
+                <ChallengeCard />
                 </div>
             </section>
         </>
