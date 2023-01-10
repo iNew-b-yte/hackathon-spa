@@ -28,21 +28,22 @@ function HomeOrChallenges() {
                             className='border-start 
                         border-warning 
                         border-5 
-                        fs-1 
+                        
                         fw-bold 
-                        px-5 
+                        px-2 px-sm-5 
                         text-white
                         '
                         >
                             Accelerate Innovation with Global AI Challenges
                         </h1>
-                        <p className='text-white  px-5 mt-4'>AI Challenges at DPhi simulate real-world problems.
+                        <p className='text-white px-0 px-sm-5 mt-4 subText'>AI Challenges at DPhi simulate real-world problems.
                             It is a great place to put your AI/Data Science skills
                             to test on diverse datasets allowing you to foster
                             learning through competitions.</p>
-                        <button
-                            type='button'
-                            className='btn btn-sm 
+                        <Link to='/createChallenge'>
+                            <button
+                                type='button'
+                                className='btn btn-sm 
                         border-primary 
                         rounded 
                         bg-white 
@@ -53,9 +54,10 @@ function HomeOrChallenges() {
                         ms-0
                         ms-md-5                  
                        '
-                        >
-                            <Link to='/createChallenge'>Create Challenge</Link>
-                        </button>
+                            >
+                                Create Challenge
+                            </button>
+                        </Link>
                     </div>
                     <div className="col-md-5 text-center">
                         <img className='img-fluid' src={rocket} alt="rocket-take-off" />
@@ -122,35 +124,45 @@ function HomeOrChallenges() {
 
 
 
-            <section id="challenges-List" className='container-fluid pb-5'>
+            <section id="challenges-List" className='container-fluid p-0 pb-5'>
                 <h1 className='fs-4 text-center p-4 text-white'>Explore Challenges</h1>
                 <div className='row m-0 mx-0 mx-md-5'>
                     <div className="col-sm-12 col-md-8 text-end p-0 ps-0 ps-md-5">
                         <input type="text" className='form-control rounded-pill custom-input ps-5' placeholder='Search' />
                     </div>
                     <div className='col-sm-12 col-md-4 text-center text-md-start pe-md-5'>
-                        <button data-bs-toggle='collapse' 
-                        data-bs-target='#filterOptions'
-                        type='button' 
-                        className='btn btn-outline-dark bg-light text-dark mt-3 mt-md-0 w-50 rounded-pill'>
-                        Filter
-                        </button>                        
+                        <button data-bs-toggle='collapse'
+                            data-bs-target='#filterOptions'
+                            type='button'
+                            className='btn btn-outline-dark bg-light text-dark mt-3 mt-md-0 w-50 rounded-pill'>
+                            Filter
+                        </button>
                     </div>
                     <div id='filterOptions' className='collapse bg-light text-dark'>
-                            data data data data
-                        </div>
+                        data data data data
+                    </div>
                 </div>
-                <div className="p-5 card-container">
-                <ChallengeCard />
-                <ChallengeCard />
-                <ChallengeCard />
-                <ChallengeCard />
-                <ChallengeCard />
-                <ChallengeCard />
-                <ChallengeCard />
-                <ChallengeCard />
-                <ChallengeCard />
-                <ChallengeCard />
+                <div className="row gap-3 gap-sm-5 p-5 p-sm-0 m-0 mt-5 justify-content-center">
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    <ChallengeCard />
+                    
                 </div>
             </section>
         </>
