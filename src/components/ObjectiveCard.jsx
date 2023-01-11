@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 const ObjectiveCard = ({ _src, heading, content }) => {
    return (
     <>
-      <img className='' src={_src} alt={_src} />
-      <h1 className='fw-bold fs-4 my-3 text-dark text-center text-sm-start'>{heading}</h1>
-      <p className='text-dark custom-fontSize text-center text-sm-start'>{content}</p>
+      <img src={_src} alt={_src} />
+      <h1 className='fw-bold fs-4 my-3 text-dark'>{heading}</h1>
+      <p className='text-dark custom-fontSize'>{content}</p>
     </>
   )
 }

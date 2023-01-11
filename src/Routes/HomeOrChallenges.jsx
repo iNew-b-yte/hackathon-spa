@@ -112,7 +112,7 @@ function HomeOrChallenges() {
                 <div className="row gap-3 gap-md-4 justify-content-center ">
 
                     {cardsData.map(data => {
-                        return <div key={data.id} className="col-12 col-md-5 rounded bg-light pt-3 pt-md-5 ps-3">
+                        return <div key={data.id} className="col-12 col-md-5 rounded bg-light pt-3 pt-md-5 ps-3 text-center text-sm-start">
                             <ObjectiveCard _src={data.img} heading={data.heading} content={data.content} />
                         </div>
                     })}
@@ -127,10 +127,10 @@ function HomeOrChallenges() {
             <section id="challenges-List" className='container-fluid p-0 pb-5'>
                 <h1 className='fs-4 text-center p-4 text-white'>Explore Challenges</h1>
                 <div className='row m-0 mx-0 mx-md-5'>
-                    <div className="col-sm-12 col-md-8 text-end p-0 ps-0 ps-md-5">
+                    <div className="col-sm-12 col-md-8 text-end  px-5 px-md-0 ps-md-5">
                         <input type="text" className='form-control rounded-pill custom-input ps-5' placeholder='Search' />
                     </div>
-                    <div className='col-sm-12 col-md-4 text-center text-md-start pe-md-5'>
+                    <div className='col-sm-12 col-md-4 text-center pe-md-5'>
                         <button data-bs-toggle='collapse'
                             data-bs-target='#filterOptions'
                             type='button'
