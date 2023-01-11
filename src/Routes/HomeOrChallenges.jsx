@@ -142,7 +142,9 @@ function HomeOrChallenges() {
                         data data data data
                     </div>
                 </div>
-                <div className="row gap-3 gap-sm-5 p-5 p-sm-0 m-0 mt-5 justify-content-center">
+
+
+                <div className="row p-5 m-0 mt-5 ">
                     <ChallengeCard />
                     <ChallengeCard />
                     <ChallengeCard />
@@ -153,16 +155,8 @@ function HomeOrChallenges() {
                     <ChallengeCard />
                     <ChallengeCard />
                     <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    
+
+
                 </div>
             </section>
         </>
