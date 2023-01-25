@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { useSelector } from 'react-redux';
+
 // import component(s)
 import ChallengeCard from '../components/ChallengeCard';
 import ObjectiveCard from '../components/ObjectiveCard';
@@ -15,12 +17,25 @@ import healing from "../assets/healing.png";
 import cardsData from "../data/_objectiveCard.js";
 
 function HomeOrChallenges() {
+    const events = useSelector(state => state._event.eventsArr );
+    console.log(events);
+    // const [click, setClick] = useState(false);
+
+    // function handleClick(){
+    //     setClick((prevValue)=>{
+    //         return !prevValue;
+    //     });
+    // }
+
+
+    
+
     return (
         <>
             <section id="achievements"
                 className='achievements 
                     container-fluid                     
-                    p-5'
+                    p-5'                
             >
                 <div className='row text-md-start text-center'>
                     <div className="col-md-7">
@@ -133,7 +148,7 @@ function HomeOrChallenges() {
                     <div className='col-sm-12 col-md-4 text-center pe-md-5'>
                         <button data-bs-toggle='collapse'
                             data-bs-target='#filterOptions'
-                            type='button'
+                            type='button'                            
                             className='btn btn-outline-dark bg-light text-dark mt-3 mt-md-0 w-50 rounded-pill'>
                             Filter
                         </button>
@@ -145,16 +160,18 @@ function HomeOrChallenges() {
 
 
                 <div className="row p-5 m-0 mt-5 ">
+
+                {events.map(event => {
+                   return <ChallengeCard key={event.challenge_name_input}
+                   id={event.challenge_name_input}
+                    heading={event.challenge_name_input} 
+                    img_src={event.image_input} />
+                })}
+                    {/* <ChallengeCard />
                     <ChallengeCard />
                     <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
+                    <ChallengeCard /> */}
+                    
 
 
                 </div>
