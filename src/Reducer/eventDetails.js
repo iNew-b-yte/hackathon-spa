@@ -9,15 +9,27 @@ export const eventSlice = createSlice({
             state.eventsArr.push(action.payload);
         },
 
+        editEvent : (state, action)=>{            
+            const {name , data} = action.payload;
+            
+            let newEventsArr = state.eventsArr.map((challenge)=>{
+                if(name === challenge.challenge_name_input){
+                    return {...data };
+                }
+                return challenge;
+            })
+            state.eventsArr = newEventsArr;            
+        },
+
         deleteEvent : (state, action)=>{
             let newEventsArr = state.eventsArr.filter((challenge)=>{
-                return action.payload != challenge.challenge_name_input;
+                return challenge.challenge_name_input !== action.payload;
             });
             state.eventsArr = newEventsArr;
         }
     },
 });
 
-export const { createEvent, deleteEvent } = eventSlice.actions;
+export const { createEvent, editEvent, deleteEvent } = eventSlice.actions;
 
 export default eventSlice.reducer;

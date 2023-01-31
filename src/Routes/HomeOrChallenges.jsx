@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
@@ -17,25 +17,57 @@ import healing from "../assets/healing.png";
 import cardsData from "../data/_objectiveCard.js";
 
 function HomeOrChallenges() {
-    const events = useSelector(state => state._event.eventsArr );
-    console.log(events);
-    // const [click, setClick] = useState(false);
+    const events = useSelector(state => state._event.eventsArr);
+    const [searchTxt, setSearchTxt] = useState("");
+    const [filterEvents, setFilterEvent] = useState([]);
+    // console.log(events);
 
-    // function handleClick(){
-    //     setClick((prevValue)=>{
-    //         return !prevValue;
-    //     });
-    // }
+    const changeHandler = (e) => {
+        e.preventDefault();
+        setSearchTxt(e.target.value);
+        filteredEvent(e.target.value);
+    }
 
+    const filteredEvent = (value) => {
 
-    
+        if (value.length === 0) {
+            setFilterEvent([]);
+            return;
+        };
+
+        setFilterEvent(events.filter(event => {
+            return event.challenge_name_input.search(value) !== -1;
+        }));
+    }
+
+    const originalEvents = events.map(event => {
+        return <ChallengeCard key={event.challenge_name_input}
+            id={event.challenge_name_input}
+            heading={event.challenge_name_input}
+            img_src={event.image_input}
+            start_date={event.start_date_input}
+            end_date={event.end_date_input}
+        />
+    });
+
+    const searchedEvents = filterEvents.map(event => {
+        return <ChallengeCard key={event.challenge_name_input}
+            id={event.challenge_name_input}
+            heading={event.challenge_name_input}
+            img_src={event.image_input}
+            start_date={event.start_date_input}
+            end_date={event.end_date_input}
+        />
+    });
+
+    const eventResult = searchTxt.length === 0 ? originalEvents : searchedEvents;
 
     return (
         <>
             <section id="achievements"
                 className='achievements 
                     container-fluid                     
-                    p-5'                
+                    p-5'
             >
                 <div className='row text-md-start text-center'>
                     <div className="col-md-7">
@@ -143,12 +175,12 @@ function HomeOrChallenges() {
                 <h1 className='fs-4 text-center p-4 text-white'>Explore Challenges</h1>
                 <div className='row m-0 mx-0 mx-md-5'>
                     <div className="col-sm-12 col-md-8 text-end  px-5 px-md-0 ps-md-5">
-                        <input type="text" className='form-control rounded-pill custom-input ps-5' placeholder='Search' />
+                        <input type="text" className='form-control rounded-pill custom-input ps-5' placeholder='Search' onChange={changeHandler} value={searchTxt} />
                     </div>
                     <div className='col-sm-12 col-md-4 text-center pe-md-5'>
                         <button data-bs-toggle='collapse'
                             data-bs-target='#filterOptions'
-                            type='button'                            
+                            type='button'
                             className='btn btn-outline-dark bg-light text-dark mt-3 mt-md-0 w-50 rounded-pill'>
                             Filter
                         </button>
@@ -157,23 +189,8 @@ function HomeOrChallenges() {
                         data data data data
                     </div>
                 </div>
-
-
                 <div className="row p-5 m-0 mt-5 ">
-
-                {events.map(event => {
-                   return <ChallengeCard key={event.challenge_name_input}
-                   id={event.challenge_name_input}
-                    heading={event.challenge_name_input} 
-                    img_src={event.image_input} />
-                })}
-                    {/* <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard />
-                    <ChallengeCard /> */}
-                    
-
-
+                    {eventResult}
                 </div>
             </section>
         </>

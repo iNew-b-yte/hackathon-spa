@@ -1,29 +1,33 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import {deleteEvent} from '../Reducer/eventDetails';
+import { deleteEvent } from '../Reducer/eventDetails';
 
 function ChallengeDetail() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {challengeId} = useParams();
+  const { challengeId } = useParams();
 
-  const events = useSelector(state => state._event.eventsArr );
-  let event_found = events.find((challenge)=>{
+  const events = useSelector(state => state._event.eventsArr);
+  let event_found = events.find((challenge) => {
     return challengeId === challenge.challenge_name_input
   });
 
-  function handleDeletePress(){
-     dispatch(deleteEvent(challengeId));
-     navigate('/');
-  }
-
-  function handleBackPress(event){
+  function handleBackPress(event) {
     event.preventDefault();
     navigate(-1);
   }
+
+
+  function handleDeletePress(event) {
+    event.preventDefault();
+    dispatch(deleteEvent(challengeId));
+    navigate('/');
+  }
+
+
 
 
   return (
@@ -43,7 +47,9 @@ function ChallengeDetail() {
         </div>
         <div className="col-6 d-none d-sm-block text-end m-0 py-2 px-5">
           <button className='btn btn-sm bg-warning text-white me-1 px-3' onClick={handleBackPress}>Back</button>
-          <button className='btn btn-sm bg-success text-white me-1 px-3'>Edit</button>
+          <Link to='/createChallenge' state={challengeId}>
+            <button className='btn btn-sm bg-success text-white me-1 px-3'>Edit</button>
+          </Link>
           <button className='btn btn-sm border-danger text-danger ms-1' onClick={handleDeletePress} >Delete</button>
         </div>
       </div>
@@ -51,7 +57,7 @@ function ChallengeDetail() {
       <div className="d-block d-sm-none text-center m-0 py-2 px-5">
         <button className='backBtn btn btn-sm bg-warning text-white me-1 px-3' onClick={handleBackPress}>Back</button>
         <button className='editBtn btn btn-sm bg-success text-white mx-1 px-3'>Edit</button>
-        <button className='delBtn btn btn-sm border-danger text-danger ms-1' onClick={handleDeletePress} >Delete</button>
+        <button className='delBtn btn btn-sm border-danger text-danger ms-1' onClick={handleDeletePress}>Delete</button>
       </div>
 
     </section>
