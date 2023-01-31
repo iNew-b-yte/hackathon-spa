@@ -56,7 +56,9 @@ function ChallengeDetail() {
       <p className="p-2 subText px-md-5 mx-sm-5">{event_found.description_textarea}</p><br />
       <div className="d-block d-sm-none text-center m-0 py-2 px-5">
         <button className='backBtn btn btn-sm bg-warning text-white me-1 px-3' onClick={handleBackPress}>Back</button>
-        <button className='editBtn btn btn-sm bg-success text-white mx-1 px-3'>Edit</button>
+        <Link to='/createChallenge' state={challengeId}>
+          <button className='editBtn btn btn-sm bg-success text-white mx-1 px-3'>Edit</button>
+        </Link>
         <button className='delBtn btn btn-sm border-danger text-danger ms-1' onClick={handleDeletePress}>Delete</button>
       </div>
 
