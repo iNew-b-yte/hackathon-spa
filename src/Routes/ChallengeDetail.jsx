@@ -1,19 +1,48 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteEvent } from '../Reducer/eventDetails';
 
+
 function ChallengeDetail() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //status of challenge
+  const [state, setState] = useState("");
+
   const { challengeId } = useParams();
+
+
+  const status = useSelector(state => state._status.statusArr);
+  
 
   const events = useSelector(state => state._event.eventsArr);
   let event_found = events.find((challenge) => {
     return challengeId === challenge.challenge_name_input
-  });
+  }); 
+
+
+  const fetchStatus = useCallback(()=> {
+    let event_status = status.find((x)=>{
+      return challengeId === x.challengeId;
+    });
+
+  
+    
+    setState(event_status.challengeStatus);
+  },[challengeId,status]);
+
+  useEffect(()=>{      
+    fetchStatus();
+  },[fetchStatus]);
+
+
+  
+
+  const statusResult = state === "Past" ? `Ended on ${new Date(event_found.end_date_input).toString()}` : state === "Active" ? `Started on ${new Date(event_found.start_date_input).toString()}` :`Starts on ${new Date(event_found.start_date_input).toString()}` ;
 
   function handleBackPress(event) {
     event.preventDefault();
@@ -34,7 +63,7 @@ function ChallengeDetail() {
     <section id="challenge-Detail" className='container-fluid p-0'>
       <div className="cardHeading p-2 py-3 p-md-5">
         <div className='ms-sm-5 bg-warning px-2 px-sm-5 text-center rounded fw-bold d-inline-block custom-font-Size'>
-          Starts on {new Date(event_found.start_date_input).toString()}
+          {statusResult}
         </div>
         <h1 className='ms-sm-5 text-white heading mt-3'>{event_found.challenge_name_input}</h1>
         <p className='ms-sm-5 text-white subText mt-3'>{event_found.task_input}</p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 // import component(s)
 import ChallengeCard from '../components/ChallengeCard';
 import ObjectiveCard from '../components/ObjectiveCard';
+import CheckedOptions from '../components/CheckedOptions';
 
 // import image
 import rocket from '../assets/rocket.png';
@@ -18,10 +19,59 @@ import cardsData from "../data/_objectiveCard.js";
 
 function HomeOrChallenges() {
     const events = useSelector(state => state._event.eventsArr);
-    const [searchTxt, setSearchTxt] = useState("");
-    const [filterEvents, setFilterEvent] = useState([]);
-    // console.log(events);
+    const status = useSelector(state => state._status.statusArr);
 
+    //stores the 'checked' input tags
+    const [target, setTarget] = useState([]);
+    
+
+    //for filter options
+    const [checked, setChecked] = useState([]);
+    const [checkFilterEvents, setCheckFilterEvents] = useState([]);
+
+    //for search bar
+    const [searchTxt, setSearchTxt] = useState("");
+    const [searchEvents, setSearchEvent] = useState([]);
+
+    //for filter options
+    const onCheckedHandler = (e) => {
+        var updatedList = [...checked];
+        setTarget(prevValue => {
+            return [...prevValue, e.target];
+        });
+
+        if (e.target.checked) {
+            updatedList = [...checked, e.target.value];
+        } else {
+            updatedList.splice(checked.indexOf(e.target.value), 1);
+        }
+        setChecked(updatedList);
+
+    }
+
+    //for filtering events based on filter options
+    useEffect(() => {    
+        // let data = events.filter((x) =>{
+        //     return status.find(item => {
+        //        return item.challengeId === x.challenge_name_input && checked.find(i =>{
+        //         return item.challengeStatus === i;
+        //        });
+        //     });
+        // });    
+        let checkedEvents = events.filter((x) => {
+            return x.level_type_dropdown === checked.find((item) => item === x.level_type_dropdown)|| status.find(item => {
+                return item.challengeId === x.challenge_name_input && checked.find(i =>{
+                 return item.challengeStatus === i;
+                });
+             });  ;
+        });               
+        setCheckFilterEvents(checkedEvents);
+        
+    }, [checked, events, status]);
+
+
+
+    //for search bar filtering
     const changeHandler = (e) => {
         e.preventDefault();
         setSearchTxt(e.target.value);
@@ -29,17 +79,32 @@ function HomeOrChallenges() {
     }
 
     const filteredEvent = (value) => {
-
         if (value.length === 0) {
-            setFilterEvent([]);
+            setSearchEvent([]);
             return;
         };
-
-        setFilterEvent(events.filter(event => {
+        setSearchEvent(events.filter(event => {
             return event.challenge_name_input.search(value) !== -1;
         }));
     }
 
+    //sent as prop to 'CheckedOptions' component, deletes the value from the array when clicked
+    const onDelete = (id) => {
+        
+        const foundTarget = target.find(x => x.value === id);
+
+        //marks the input tags as 'unchecked'  
+        foundTarget.checked = false;
+
+        //removes the 'unchecked' input tag values from the array
+        setChecked(prevValue => {
+            return prevValue.filter(check => {
+                return check !== id;
+            })
+        });
+    }
+
+    //originalEvents : events created using 'Create Challenge' btn on homepage
     const originalEvents = events.map(event => {
         return <ChallengeCard key={event.challenge_name_input}
             id={event.challenge_name_input}
@@ -50,7 +115,8 @@ function HomeOrChallenges() {
         />
     });
 
-    const searchedEvents = filterEvents.map(event => {
+    //searchedEvents : when searched using the search bar
+    const searchedEvents = searchEvents.map(event => {
         return <ChallengeCard key={event.challenge_name_input}
             id={event.challenge_name_input}
             heading={event.challenge_name_input}
@@ -60,26 +126,28 @@ function HomeOrChallenges() {
         />
     });
 
-    const eventResult = searchTxt.length === 0 ? originalEvents : searchedEvents;
+    //checkedEvent : 'checked' input tag values checked in the filter options
+    const checkedEvent = checkFilterEvents.map(event => {
+        return <ChallengeCard key={event.challenge_name_input}
+            id={event.challenge_name_input}
+            heading={event.challenge_name_input}
+            img_src={event.image_input}
+            start_date={event.start_date_input}
+            end_date={event.end_date_input}
+        />
+    });
 
+    //Final events array result to display based on action performed
+    let eventResult = searchTxt.length !== 0 ? searchedEvents : checkFilterEvents.length !== 0 ? checkedEvent : originalEvents;
     return (
         <>
-            <section id="achievements"
-                className='achievements 
-                    container-fluid                     
-                    p-5'
-            >
+            <section id="achievements" className='achievements container-fluid p-5'>
                 <div className='row text-md-start text-center'>
                     <div className="col-md-7">
-                        <h1
-                            className='border-start 
-                        border-warning 
-                        border-5 
-                        
-                        fw-bold 
-                        px-2 px-sm-5 
-                        text-white
-                        '
+                        <h1 className='border-start 
+                            border-warning border-5 
+                            fw-bold px-2 px-sm-5 
+                            text-white'
                         >
                             Accelerate Innovation with Global AI Challenges
                         </h1>
@@ -88,19 +156,12 @@ function HomeOrChallenges() {
                             to test on diverse datasets allowing you to foster
                             learning through competitions.</p>
                         <Link to='/createChallenge'>
-                            <button
-                                type='button'
+                            <button type='button'
                                 className='btn btn-sm 
-                        border-primary 
-                        rounded 
-                        bg-white 
-                        fw-bold 
-                        text-primary 
-                        p-2
-                        mt-3
-                        ms-0
-                        ms-md-5                  
-                       '
+                                border-primary rounded 
+                                bg-white fw-bold 
+                                text-primary p-2
+                                mt-3 ms-0 ms-md-5'
                             >
                                 Create Challenge
                             </button>
@@ -185,8 +246,41 @@ function HomeOrChallenges() {
                             Filter
                         </button>
                     </div>
+                    <ul className='d-flex list-unstyled flex-wrap mt-3 justify-content-center'>
+                        {checked.map(check => {
+                            return <CheckedOptions key={check} id={check} option={check} deleteFn={onDelete} />
+                        })}
+                    </ul>
                     <div id='filterOptions' className='collapse bg-light text-dark'>
-                        data data data data
+                        <hr />
+                        Status
+                        <label className='d-block'>
+                            <input type="checkbox" name="Active" value="Active" id="active" onChange={onCheckedHandler} />
+                            : Active
+                        </label>
+                        <label className='d-block'>
+                            <input type="checkbox" name="Upcoming" value="Upcoming" id="upcoming" onChange={onCheckedHandler} />
+                            : Upcoming
+                        </label>
+                        <label className='d-block'>
+                            <input type="checkbox" name="Past" value="Past" id="past" onChange={onCheckedHandler} />
+                            : Past
+                        </label>
+
+                        <hr />
+                        Level
+                        <label className='d-block'>
+                            <input type="checkbox" name="Easy" value="Easy" id="easy" onChange={onCheckedHandler} />
+                            : Easy
+                        </label>
+                        <label className='d-block'>
+                            <input type="checkbox" name="Medium" value="Medium" id="medium" onChange={onCheckedHandler} />
+                            : Medium
+                        </label>
+                        <label className='d-block'>
+                            <input type="checkbox" name="Hard" value="Hard" id="hard" onChange={onCheckedHandler} />
+                            : Hard
+                        </label>
                     </div>
                 </div>
                 <div className="row p-5 m-0 mt-5 ">

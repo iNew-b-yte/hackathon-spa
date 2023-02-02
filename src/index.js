@@ -6,7 +6,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
+//reducers
 import eventReducer from './Reducer/eventDetails';
+import statusReducer from './Reducer/status';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -17,7 +19,8 @@ const ChallengeDetail = lazy(() => import("./Routes/ChallengeDetail"));
 
 const store = configureStore({
   reducer: {
-    _event : eventReducer
+    _event : eventReducer,
+    _status: statusReducer
   },
 });
 

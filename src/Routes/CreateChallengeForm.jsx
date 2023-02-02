@@ -13,6 +13,14 @@ function CreateChallengeForm() {
 
     const [locationState, setLocationState] = useState(location.state !== null && location.state !== undefined ? true : false);
 
+    // const statusArr = useSelector(state => state._status.statusArr);
+    // let challengeId = statusArr.filter(challenge => {
+    //     return challenge.challengeId !== location.state;
+    // })
+
+
+
+
     let event_found;
     const events = useSelector(state => state._event.eventsArr);
     if (locationState) {
@@ -53,7 +61,7 @@ function CreateChallengeForm() {
             dispatch(createEvent(eventDetail));
         }
 
-        // console.log(eventDetail);
+        
         navigate('/');
     }
 
